@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+@using System.Data;
+@using XmlCrud.App_Code;
+
+@{
+    SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
+    string file = Session["file"] as string;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form method="post">
+            Weet u zeker dat u deze song wilt verwijderen?
+            <br />
+            Ja <input type="radio" name="keuze" value="ja"/>
+            Nee <input type="radio" name="keuze" value="nee"/>
+            <br />
+            <input type="submit" name="verder" value="Verder" />
+        </form>
+    @if (IsPost)
+    {
+        if (Request.Form["keuze"] == "ja")
+        {
+            string id = Request.QueryString["id"];
+            mySongMethods.DeleteSong(id, file);
+        }
+
+        Response.Redirect(@"~/index.cshtml");
+    }
+    </div>
+</body>
+</html>

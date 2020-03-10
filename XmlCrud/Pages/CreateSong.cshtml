@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+@using System.Data;
+@using XmlCrud.App_Code;
+
+@{ 
+    SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
+    string file = Session["file"] as string;
+}
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>ID:</td>
+                    <td><input type="text" name="id" /></td>
+                </tr>
+                <tr>
+                    <td>Artist:</td>
+                    <td><input type="text" name="artist" /></td>
+                </tr>
+                <tr>
+                    <td>Titel:</td>
+                    <td><input type="text" name="title" /></td>
+                </tr>
+                <tr>
+                    <td>Jaar:</td>
+                    <td><input type="text" name="year" /></td>
+                </tr>
+                <tr>
+                    <td>Gerne:</td>
+                    <td><input type="text" name="gerne" /></td>
+                </tr>
+                <tr>
+                    <td>Tijd:</td>
+                    <td><input type="text" name="time" /></td>
+                </tr>
+                <tr>
+                    <td>File:</td>
+                    <td><input type="text" name="file" /></td>
+                </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" name="SAVE" /></td>
+                    </tr>
+            </table>
+        </form>
+        @if (IsPost)
+        {
+            DataRow dr = mySongMethods.GetEmptyDataRow();
+
+            dr[0] = Request.Form["id"];
+            dr[1] = Request.Form["artist"];
+            dr[2] = Request.Form["title"];
+            dr[3] = Request.Form["year"];
+            dr[4] = Request.Form["gerne"];
+            dr[5] = Request.Form["time"];
+            dr[6] = Request.Form["file"];
+
+            mySongMethods.CreateSong(dr, file);
+            Response.Redirect(@"~/index.cshtml");
+        }
+    </div>
+</body>
+</html>
